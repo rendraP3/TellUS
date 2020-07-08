@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.MissingPeopleDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <ImageView
+                android:id="@+id/peopleImage"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/ic_image_black_24dp"/>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:text="Nama"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_weight="0.2"
+                        android:text=":"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/peopleName"
+                        android:text="Name"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:text="Umur"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_weight="0.2"
+                        android:text=":"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/peopleAge"
+                        android:text="Age"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:text="Jenis Kelamin"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_weight="0.2"
+                        android:text=":"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/peopleGender"
+                        android:text="Gender"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:text="Agama"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_weight="0.2"
+                        android:text=":"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/peopleReligion"
+                        android:text="Religion"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:text="Alamat"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_weight="0.2"
+                        android:text=":"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/peopleAddress"
+                        android:text="Address"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:text="Lokasi Terakhir"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_weight="0.2"
+                        android:text=":"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/peopleLastLocation"
+                        android:text="Las Location"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_weight="0.3"
+                        android:text="Deskripsi"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_weight="0.2"
+                        android:text=":"/>
+
+                    <TextView
+                        android:layout_weight="1"
+                        android:id="@+id/peopleDescription"
+                        android:text="Description"
+                        android:textAlignment="textEnd"
+                        android:textColor="@android:color/black"/>
+
+                </TableRow>
+
+            </TableLayout>
+
+            <Button
+                android:id="@+id/btReport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:padding="20dp"
+                android:text="Laporkan"/>
+
+            <Button
+                android:id="@+id/btSeeDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:layout_marginTop="25dp"
+                android:text="Lihat Laporan"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:layout_marginTop="25dp"
+                android:text="Batalkan Laporan"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btFounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:layout_marginTop="10dp"
+                android:text="Sudah Ditemukan"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TellUS</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="gender_list">
+        <item>Laki-Laki</item>
+        <item>Perempuan</item>
+    </string-array>
+
+    <string name="gender">Jenis Kelamin</string>
+</resources>

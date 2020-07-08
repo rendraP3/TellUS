@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "422757413579",
+    "firebase_url": "https://tell-us-cae0f.firebaseio.com",
+    "project_id": "tell-us-cae0f",
+    "storage_bucket": "tell-us-cae0f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422757413579:android:b528a1cc7e222b82f9214e",
+        "android_client_info": {
+          "package_name": "com.dotdevs.tellus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422757413579-9u45c63i8bq54emrhq16ai81u2rik4qt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAla0CjP9ORFyBiZDChGwK-XVFCoy5OeoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422757413579-9u45c63i8bq54emrhq16ai81u2rik4qt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
