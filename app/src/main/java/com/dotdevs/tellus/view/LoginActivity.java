@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity
             }
             break;
             case R.id.btForgotPassword: {
-
+                startActivity(new Intent(this, ForgotPasswordActivity.class));
             }
             break;
             case R.id.btRegister: {

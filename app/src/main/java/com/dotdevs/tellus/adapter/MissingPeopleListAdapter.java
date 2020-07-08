@@ -71,6 +71,7 @@ public class MissingPeopleListAdapter extends FirestoreRecyclerAdapter<People,
             intent.putExtra("isReported", model.isReported());
             intent.putExtra("uidReporter", model.getUidReporter());
             intent.putExtra("isActive", model.isActive());
+            intent.putExtra("isFound", model.isFound());
 
             context.startActivity(intent);
         });

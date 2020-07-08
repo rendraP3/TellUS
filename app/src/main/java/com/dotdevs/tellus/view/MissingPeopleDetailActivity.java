@@ -89,6 +89,7 @@ public class MissingPeopleDetailActivity extends AppCompatActivity implements Vi
     private void getData() {
         Intent intent = getIntent();
         boolean isReported = intent.getBooleanExtra("isReported", false);
+        boolean isFound = intent.getBooleanExtra("isFound", false);
         uid = intent.getStringExtra("uid");
 
         txtName.setText(intent.getStringExtra("name"));
@@ -117,6 +118,12 @@ public class MissingPeopleDetailActivity extends AppCompatActivity implements Vi
                 btCancel.setVisibility(View.GONE);
                 btSeeDetail.setVisibility(View.VISIBLE);
                 btFounded.setVisibility(View.VISIBLE);
+            }
+
+            if (isFound) {
+                btCancel.setVisibility(View.GONE);
+                btSeeDetail.setVisibility(View.GONE);
+                btFounded.setVisibility(View.GONE);
             }
         }
 

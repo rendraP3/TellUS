@@ -51,6 +51,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="0.3"
                         android:text="Nama"
                         android:textStyle="bold"/>
@@ -60,6 +61,7 @@
                         android:text=":"/>
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/peopleName"
                         android:text="Name"
@@ -74,6 +76,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="0.3"
                         android:text="Umur"
                         android:textStyle="bold"/>
@@ -83,6 +86,7 @@
                         android:text=":"/>
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/peopleAge"
                         android:text="Age"
@@ -97,6 +101,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="0.3"
                         android:text="Jenis Kelamin"
                         android:textStyle="bold"/>
@@ -106,6 +111,7 @@
                         android:text=":"/>
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/peopleGender"
                         android:text="Gender"
@@ -120,6 +126,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="0.3"
                         android:text="Agama"
                         android:textStyle="bold"/>
@@ -129,6 +136,7 @@
                         android:text=":"/>
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/peopleReligion"
                         android:text="Religion"
@@ -143,6 +151,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="0.3"
                         android:text="Alamat"
                         android:textStyle="bold"/>
@@ -152,6 +161,7 @@
                         android:text=":"/>
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/peopleAddress"
                         android:text="Address"
@@ -166,6 +176,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="0.3"
                         android:text="Lokasi Terakhir"
                         android:textStyle="bold"/>
@@ -175,6 +186,7 @@
                         android:text=":"/>
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/peopleLastLocation"
                         android:text="Las Location"
@@ -189,6 +201,7 @@
                     android:layout_marginTop="10dp">
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="0.3"
                         android:text="Deskripsi"
                         android:textStyle="bold"/>
@@ -198,6 +211,7 @@
                         android:text=":"/>
 
                     <TextView
+                        android:layout_width="wrap_content"
                         android:layout_weight="1"
                         android:id="@+id/peopleDescription"
                         android:text="Description"
