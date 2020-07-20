@@ -58,7 +58,9 @@ public class CompletedFragment extends Fragment {
 
         Query query = mFirestore.collection("missing")
                 .whereEqualTo("uidReporter", mAuth.getUid())
-                .whereEqualTo("found", true).whereEqualTo("active", true);
+                .whereEqualTo("found", true)
+                .whereEqualTo("active", true)
+                .whereEqualTo("verify", true);
 
         FirestoreRecyclerOptions<People> options =
                 new FirestoreRecyclerOptions.Builder<People>().setQuery(query, People.class)

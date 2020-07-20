@@ -15,6 +15,7 @@ import android.os.Bundle;
 import com.dotdevs.tellus.R;
 import com.dotdevs.tellus.view.fragment.CompletedFragment;
 import com.dotdevs.tellus.view.fragment.ProcessedFragment;
+import com.dotdevs.tellus.view.fragment.WaitingListFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class HistoryActivity extends AppCompatActivity {
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
+        adapter.addFragment(new WaitingListFragment(), "Menunggu Verifikasi");
         adapter.addFragment(new ProcessedFragment(), "Di Proses");
         adapter.addFragment(new CompletedFragment(), "Ditemukan");
         viewPager.setAdapter(adapter);

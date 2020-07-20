@@ -7,6 +7,9 @@ import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 import com.dotdevs.tellus.R;
+import com.dotdevs.tellus.model.MissingImage;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.jsibbold.zoomage.ZoomageView;
 
 import butterknife.BindView;
@@ -29,6 +32,11 @@ public class ImageDetailActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        Glide.with(this).load(getIntent().getStringExtra("image")).into(zvImage);
+        MissingImage missingImage = getIntent().getParcelableExtra("image");
+
+        StorageReference mStorageRef =
+                FirebaseStorage.getInstance().getReferenceFromUrl(missingImage.getLocation());
+
+        Glide.with(this).load(mStorageRef).into(zvImage);
     }
 }

@@ -35,13 +35,11 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <ImageView
-                android:id="@+id/ivImage"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginBottom="15dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_add_a_photo_black_24dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imageList"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"/>
 
             <EditText
                 android:id="@+id/txtName"
@@ -67,12 +65,12 @@
                 style="@style/Widget.AppCompat.Spinner.Underlined"/>
 
             <EditText
-                android:id="@+id/txtReligion"
+                android:id="@+id/txtPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Agama"
+                android:hint="No Telepon Anda"
                 android:layout_marginTop="10dp"
-                android:inputType="text"/>
+                android:inputType="phone"/>
 
             <EditText
                 android:id="@+id/txtAddress"
@@ -90,6 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Lokasi Terakhir"
+                android:focusable="false"
                 android:layout_marginTop="10dp"
                 android:inputType="text"/>
 

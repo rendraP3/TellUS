@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:alpha="0.5"
-    android:clickable="false"
-    android:focusable="true">
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <ProgressBar
         android:layout_centerInParent="true"

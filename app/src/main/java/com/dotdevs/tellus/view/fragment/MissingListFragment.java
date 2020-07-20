@@ -67,7 +67,8 @@ public class MissingListFragment extends Fragment {
         final Query query =
                 mFirestore.collection("missing")
                         .whereEqualTo("found", false)
-                        .whereEqualTo("active", true).orderBy("timeStamp"
+                        .whereEqualTo("active", true)
+                        .whereEqualTo("verify", true).orderBy("timeStamp"
                         , Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<People> options =

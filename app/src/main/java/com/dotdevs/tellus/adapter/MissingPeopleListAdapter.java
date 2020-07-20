@@ -7,16 +7,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dotdevs.tellus.R;
+import com.dotdevs.tellus.model.MissingImage;
 import com.dotdevs.tellus.model.People;
 import com.dotdevs.tellus.view.MissingPeopleDetailActivity;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,7 +49,12 @@ public class MissingPeopleListAdapter extends FirestoreRecyclerAdapter<People,
         holder.name.setText(model.getName());
         holder.address.setText(model.getAddress());
 
-        Glide.with(context).load(model.getImageUrl()).into(holder.image);
+        System.out.println(model.getImagesUrl().size());
+
+        StorageReference mStorageRef =
+                FirebaseStorage.getInstance().getReferenceFromUrl(model.getImagesUrl().get(0).getLocation());
+
+        Glide.with(context).load(mStorageRef).into(holder.image);
 
         SimpleDateFormat formatFrom = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         SimpleDateFormat formatTo = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
@@ -59,19 +68,8 @@ public class MissingPeopleListAdapter extends FirestoreRecyclerAdapter<People,
 
         holder.wrapper.setOnClickListener(v -> {
             Intent intent = new Intent(context, MissingPeopleDetailActivity.class);
-            intent.putExtra("uid", model.getUid());
-            intent.putExtra("name", model.getName());
-            intent.putExtra("age", model.getAge());
-            intent.putExtra("address", model.getAddress());
-            intent.putExtra("description", model.getDescription());
-            intent.putExtra("gender", model.getGender());
-            intent.putExtra("religion", model.getReligion());
-            intent.putExtra("lastLocation", model.getLastLocation());
-            intent.putExtra("image", model.getImageUrl());
-            intent.putExtra("isReported", model.isReported());
-            intent.putExtra("uidReporter", model.getUidReporter());
-            intent.putExtra("isActive", model.isActive());
-            intent.putExtra("isFound", model.isFound());
+
+            intent.putExtra("people", model);
 
             context.startActivity(intent);
         });

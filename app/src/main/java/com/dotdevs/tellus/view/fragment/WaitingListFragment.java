@@ -21,15 +21,12 @@ import com.google.firebase.firestore.Query;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ProcessedFragment extends Fragment {
+public class WaitingListFragment extends Fragment {
 
-    @BindView(R.id.processedList)
-    RecyclerView processdList;
+    @BindView(R.id.waitingList)
+    RecyclerView waitingList;
 
-    public ProcessedFragment() {
+    public WaitingListFragment() {
         // Required empty public constructor
     }
 
@@ -40,19 +37,19 @@ public class ProcessedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_processed, container, false);
+        View view = inflater.inflate(R.layout.fragment_waiting_list, container, false);
         ButterKnife.bind(this, view);
 
         mFirestore = FirebaseFirestore.getInstance();
 
-        processdList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        waitingList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        getProcessedList();
+        getWaitingList();
 
         return view;
     }
 
-    private void getProcessedList() {
+    private void getWaitingList() {
 
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
@@ -60,7 +57,7 @@ public class ProcessedFragment extends Fragment {
                 .whereEqualTo("uidReporter", mAuth.getUid())
                 .whereEqualTo("found", false)
                 .whereEqualTo("active", true)
-                .whereEqualTo("verify", true);
+                .whereEqualTo("verify", false);
 
         FirestoreRecyclerOptions<People> options =
                 new FirestoreRecyclerOptions.Builder<People>().setQuery(query, People.class)
@@ -68,7 +65,7 @@ public class ProcessedFragment extends Fragment {
 
         mAdapter = new MissingPeopleListAdapter(options, getContext());
 
-        processdList.setAdapter(mAdapter);
+        waitingList.setAdapter(mAdapter);
 
     }
 

@@ -13,14 +13,21 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.dotdevs.tellus.R;
+import com.dotdevs.tellus.adapter.MissingImageListAdapter;
+import com.dotdevs.tellus.model.MissingImage;
 import com.dotdevs.tellus.model.People;
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,6 +36,12 @@ import com.google.firebase.firestore.ServerTimestamp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mapbox.api.geocoding.v5.models.CarmenFeature;
+import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.camera.CameraPosition;
+import com.mapbox.mapboxsdk.geometry.LatLng;
+import com.mapbox.mapboxsdk.plugins.places.picker.PlacePicker;
+import com.mapbox.mapboxsdk.plugins.places.picker.model.PlacePickerOptions;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -45,8 +58,10 @@ import butterknife.ButterKnife;
 public class AddNewPeopleActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
 
-    @BindView(R.id.ivImage)
-    ImageView ivImage;
+    private final int REQUEST_CODE_AUTOCOMPLETE = 101;
+
+    @BindView(R.id.imageList)
+    RecyclerView rvImage;
 
     @BindView(R.id.txtName)
     EditText txtName;
@@ -57,8 +72,8 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
     @BindView(R.id.spinnerGender)
     Spinner spGender;
 
-    @BindView(R.id.txtReligion)
-    EditText txtReligion;
+    @BindView(R.id.txtPhoneNumber)
+    EditText txtPhoneNumber;
 
     @BindView(R.id.txtAddress)
     EditText txtAddress;
@@ -77,19 +92,27 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
 
     @BindView(R.id.progressBarWrapper)
     View progressBar;
-
-    private Uri imageUri;
     private String gender;
 
     private FirebaseFirestore mFirestore;
     private FirebaseStorage mStorage;
     private FirebaseAuth mAuth;
 
+    private double latitude, longitude;
+    private List<String> imageList;
+    private List<MissingImage> missingImageList;
+    private MissingImageListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Mapbox.getInstance(this, getString(R.string.mapbox_token));
         setContentView(R.layout.activity_add_new_people);
         ButterKnife.bind(this);
+
+        imageList = new ArrayList<>();
+        missingImageList = new ArrayList<>();
+        adapter = new MissingImageListAdapter(imageList, this);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setTitle("Form Data Orang Hilang");
@@ -100,11 +123,28 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
         mStorage = FirebaseStorage.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        ivImage.setOnClickListener(this);
         btSave.setOnClickListener(this);
         spGender.setOnItemSelectedListener(this);
         
         setupSpinner();
+        setupImageList();
+
+        txtLastLocation.setOnClickListener(v -> {
+            Intent intent = new PlacePicker.IntentBuilder()
+                    .accessToken(getString(R.string.mapbox_token))
+                    .placeOptions(PlacePickerOptions.builder()
+                            .statingCameraPosition(new CameraPosition.Builder()
+                                    .target(new LatLng(-5.407355, 105.270548)).zoom(14).build())
+                            .build())
+                    .build(this);
+
+            startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);
+        });
+    }
+
+    private void setupImageList() {
+        rvImage.setLayoutManager(new GridLayoutManager(this, 3, RecyclerView.VERTICAL, false));
+        rvImage.setAdapter(adapter);
     }
 
     private void setupSpinner() {
@@ -122,14 +162,6 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ivImage : {
-                ImagePicker.Companion
-                        .with(this)
-                        .compress(1024)
-                        .galleryOnly()
-                        .start();
-            }
-            break;
             case R.id.btSave : {
                 if (checkInput()) {
                     addNewData();
@@ -142,69 +174,93 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
     private void addNewData(){
         String name = txtName.getText().toString();
         String age = txtAge.getText().toString();
-        String religion = txtReligion.getText().toString();
+        String phoneNumber = txtPhoneNumber.getText().toString();
         String address = txtAddress.getText().toString();
         String lastLocation = txtLastLocation.getText().toString();
         String description = txtDescription.getText().toString();
 
-        final StorageReference mStorageRef =
-                mStorage.getReference().child("people").child(name + ".jpg");
-
-        UploadTask uploadTask = mStorageRef.putFile(imageUri);
-
         progressBar.setVisibility(View.VISIBLE);
+        for (int i = 0; i < imageList.size(); i++) {
+            Uri imageUri = Uri.parse(imageList.get(i));
 
-        uploadTask.continueWithTask(task -> {
-            if (!task.isSuccessful()) {
-                throw new Exception();
-            }
+            StorageReference mStoreRef = mStorage.getReference().child("people")
+                    .child(name + "/" + imageUri.getLastPathSegment());
 
-            return mStorageRef.getDownloadUrl();
-        }).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                String imageUrl = Objects.requireNonNull(task.getResult()).toString();
+            UploadTask uploadTask = mStoreRef.putFile(imageUri);
 
-                final DocumentReference mDocRef = mFirestore.collection("missing").document();
+            uploadTask.continueWithTask(uploadImage -> {
+                if (!uploadImage.isSuccessful()) {
+                    throw Objects.requireNonNull(uploadImage.getException());
+                }
 
-                final People people = new People(
-                        mDocRef.getId(),
-                        mAuth.getUid(),
-                        name,
-                        age,
-                        gender,
-                        religion,
-                        address,
-                        lastLocation,
-                        description,
-                        imageUrl,
-                        new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()),
-                        false,
-                        true,
-                        false,
-                        Timestamp.now()
-                );
+                return mStoreRef.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                }
+            });
 
-                mDocRef.set(people).addOnCompleteListener(upload -> {
-                    progressBar.setVisibility(View.GONE);
-                    if (upload.isSuccessful()) {
-                        Toast.makeText(this, "Data berhasil ditambah", Toast.LENGTH_SHORT).show();
+            missingImageList.add(
+                    new MissingImage(
+                            imageUri.getLastPathSegment(),
+                            "gs://tell-us-cae0f.appspot.com/people/" + name + "/" +
+                                    imageUri.getLastPathSegment()
+                    )
+            );
+        }
 
-                        finish();
-                    } else {
-                        Toast.makeText(this, "Terjadi kesalahan", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        });
+        if (missingImageList.size() != 0) {
+            final DocumentReference mDocRef = mFirestore.collection("missing").document();
+
+            final People people = new People(
+                    mDocRef.getId(),
+                    mAuth.getUid(),
+                    name,
+                    age,
+                    gender,
+                    phoneNumber,
+                    address,
+                    lastLocation,
+                    description,
+                    missingImageList,
+                    new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()),
+                    false,
+                    true,
+                    false,
+                    false,
+                    latitude,
+                    longitude,
+                    Timestamp.now()
+            );
+
+            mDocRef.set(people).addOnCompleteListener(task -> {
+                progressBar.setVisibility(View.GONE);
+                if (task.isSuccessful()) {
+                    Toast.makeText(this, "Laporan berhasil dibuat", Toast.LENGTH_SHORT).show();
+
+                    finish();
+                } else {
+                    Toast.makeText(this, "Terjadi Kesalahan", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode == RESULT_OK) {
-            assert data != null;
-            imageUri = data.getData();
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_AUTOCOMPLETE) {
+            CarmenFeature feature = PlacePicker.getPlace(data);
 
-            ivImage.setImageURI(data.getData());
+            txtLastLocation.setText(feature.placeName());
+            latitude = feature.center().latitude();
+            longitude = feature.center().longitude();
+        }
+
+        if (resultCode == RESULT_OK && requestCode == ImagePicker.REQUEST_CODE) {
+            assert data != null;
+            imageList.add(data.getData().toString());
+
+            adapter.notifyDataSetChanged();
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(this, ImagePicker.Companion.getError(data), Toast.LENGTH_SHORT).show();
         }
@@ -224,8 +280,8 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
             return false;
         }
 
-        if (txtReligion.getText() == null || txtReligion.getText().toString().isEmpty()) {
-            txtReligion.setError("Agama tidak boleh kosong");
+        if (txtPhoneNumber.getText() == null || txtPhoneNumber.getText().toString().isEmpty()) {
+            txtPhoneNumber.setError("Agama tidak boleh kosong");
 
             return false;
         }
@@ -248,7 +304,7 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
             return false;
         }
 
-        if (imageUri == null) {
+        if (imageList.isEmpty()) {
             Toast.makeText(this, "Gambar tidak boleh kosong", Toast.LENGTH_SHORT).show();
 
             return false;
