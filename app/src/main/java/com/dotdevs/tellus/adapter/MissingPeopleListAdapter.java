@@ -49,8 +49,6 @@ public class MissingPeopleListAdapter extends FirestoreRecyclerAdapter<People,
         holder.name.setText(model.getName());
         holder.address.setText(model.getAddress());
 
-        System.out.println(model.getImagesUrl().size());
-
         StorageReference mStorageRef =
                 FirebaseStorage.getInstance().getReferenceFromUrl(model.getImagesUrl().get(0).getLocation());
 

@@ -21,14 +21,12 @@
         tools:targetApi="q"
         android:name=".TellUS">
         <activity android:name=".view.ForgotPasswordActivity"></activity>
-        <activity android:name=".view.MapActivity" />
         <activity android:name=".view.AddReportActivity" />
         <activity android:name=".view.ReportDetailActivity" />
         <activity android:name=".view.HistoryActivity" />
         <activity android:name=".view.ImageDetailActivity" />
         <activity android:name=".view.MissingPeopleDetailActivity" />
         <activity android:name=".view.AddNewPeopleActivity" />
-        <activity android:name=".view.ProfileActivity" />
         <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.LoginActivity" />
         <activity android:name=".SplashScreenActivity">

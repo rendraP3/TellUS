@@ -54,6 +54,7 @@ public class GraphFragment extends Fragment {
         return view;
     }
 
+    // Fungsi untuk mengatur grafik
     private void setupChartView() {
         Cartesian cartesian = AnyChart.line();
         cartesian.animation(true);
@@ -108,6 +109,7 @@ public class GraphFragment extends Fragment {
         cartesian.credits(false);
     }
 
+    //CUstom class untuk data entry pada grafik
     private class CustomDataEntry extends ValueDataEntry {
 
         public CustomDataEntry(String x, Number value, Number value2) {

@@ -50,6 +50,7 @@ public class RegisterActivity extends AppCompatActivity {
     @BindView(R.id.progressBarWrapper)
     View progressBar;
 
+    // Inisialiasi Firebase Auth, Firestore dan Database
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private FirebaseDatabase mFirebase;
@@ -76,6 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // Fungsi untuk register
     private void register() {
         String fullName = Objects.requireNonNull(txtFullName.getText()).toString();
         String idNumber = Objects.requireNonNull(txtIdNumber.getText()).toString();
@@ -122,6 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    // Fungsi untuk mengecek inputan user
     private boolean checkInput(){
         if(txtFullName.getText() == null || txtFullName.getText().toString().isEmpty()){
             txtFullName.setError("Nama tidak boleh kosong");

@@ -56,6 +56,7 @@ public class AddReportActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Inisialisasi mapbox
         Mapbox.getInstance(this, getString(R.string.mapbox_token));
         setContentView(R.layout.activity_add_report);
         ButterKnife.bind(this);
@@ -65,8 +66,10 @@ public class AddReportActivity extends AppCompatActivity {
         toolbar.setTitle("Buat Laporan");
         toolbar.setTitleTextColor(Color.WHITE);
 
+        // Inisialisasi firestore
         mFirestore = FirebaseFirestore.getInstance();
 
+        // Digunakan untuk mengambil lokasi menggunakan mapbox
         reportLocation.setOnClickListener(v -> {
             Intent intent = new PlacePicker.IntentBuilder()
                     .accessToken(getString(R.string.mapbox_token))
@@ -89,6 +92,7 @@ public class AddReportActivity extends AppCompatActivity {
     }
 
 
+    // Fungsi untuk mengambil detail dari user
     private void getUserDetail() {
         mFirestore.collection("users").document(
                 FirebaseAuth.getInstance().getUid()).get().addOnCompleteListener(task -> {
@@ -101,6 +105,7 @@ public class AddReportActivity extends AppCompatActivity {
         });
     }
 
+    // Fungsi untuk menambahkan laporan
     private void addReport() {
         DocumentReference mDocRef =
                 mFirestore.collection("missing").document(getIntent().getStringExtra("uid")).collection(
@@ -134,6 +139,8 @@ public class AddReportActivity extends AppCompatActivity {
         });
     }
 
+
+    // Fungsi untuk mengecek inputan user
     private boolean checkInput() {
         if (reportDescription.getText() == null ||
                 reportDescription.getText().toString().isEmpty()) {

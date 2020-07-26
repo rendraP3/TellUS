@@ -54,6 +54,7 @@ public class LoginActivity extends AppCompatActivity
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        // Inisialisasi Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         btForgotPassword.setOnClickListener(this);
@@ -92,6 +93,8 @@ public class LoginActivity extends AppCompatActivity
         }
     }
 
+
+    // fungsi untuk login
     private void login(){
         String email = Objects.requireNonNull(txtEmailAddress.getText()).toString();
         String password = Objects.requireNonNull(txtPassword.getText()).toString();
@@ -113,6 +116,7 @@ public class LoginActivity extends AppCompatActivity
         });
     }
 
+    // fungsi untuk mengecek inputan dari user
     private boolean checkInput(){
         if (txtEmailAddress.getText() == null || txtEmailAddress.getText().toString().isEmpty()){
             txtEmailAddress.setError("Alamat email tidak boleh kosong");

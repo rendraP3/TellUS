@@ -52,6 +52,7 @@ public class ProcessedFragment extends Fragment {
         return view;
     }
 
+    // Fungsi untuk mengambil seluruh laporan yang sedang di proses
     private void getProcessedList() {
 
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();

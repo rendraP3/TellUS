@@ -63,6 +63,7 @@ public class MissingListFragment extends Fragment {
         return view;
     }
 
+    // Fungsi untuk mengambil semua daftar orang hilang
     private void getAllMissingPeople() {
         final Query query =
                 mFirestore.collection("missing")

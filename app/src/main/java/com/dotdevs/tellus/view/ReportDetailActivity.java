@@ -82,6 +82,7 @@ public class ReportDetailActivity extends AppCompatActivity implements View.OnCl
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
 
+        // Inisialisasi Firebase Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
         btLocation.setOnClickListener(this);
@@ -91,6 +92,7 @@ public class ReportDetailActivity extends AppCompatActivity implements View.OnCl
 
     }
 
+    // Fungsi untuk mengambil detail dari laporan dari firestore
     private void getReportDetail() {
         String uid = getIntent().getStringExtra("uid");
 
@@ -117,6 +119,7 @@ public class ReportDetailActivity extends AppCompatActivity implements View.OnCl
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btLocation: {
+                // Navigasi dari apps ke google maps menggunakan navigation
                 Uri gmmIntentUri = Uri.parse("google.navigation:q="
                         + report.getLatitude() + ","
                         + report.getLongitude());
@@ -126,6 +129,7 @@ public class ReportDetailActivity extends AppCompatActivity implements View.OnCl
             break;
 
             case R.id.btCall: {
+                // Untuk menggunakan fungsi call
                 Intent intent = new Intent(Intent.ACTION_DIAL,
                         Uri.parse("tel:" + report.getUser().getPhoneNumber()));
                 startActivity(intent);

@@ -43,8 +43,10 @@ public class CompletedFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_completed, container, false);
         ButterKnife.bind(this, view);
 
+        // Inisialisasi Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
+        // Setting layout pada reccylerview
         completedList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL,
                 false));
 
@@ -56,6 +58,7 @@ public class CompletedFragment extends Fragment {
     private void getCompletedList() {
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
+        // Parameter untuk mengambil laporan yang sudah selesai
         Query query = mFirestore.collection("missing")
                 .whereEqualTo("uidReporter", mAuth.getUid())
                 .whereEqualTo("found", true)

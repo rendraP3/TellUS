@@ -198,7 +198,7 @@ public class MissingPeopleDetailActivity extends AppCompatActivity implements Vi
             }
             break;
             case R.id.btCall: {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + model.getPhoneNumberReporter()));
                 startActivity(intent);
             }
@@ -207,8 +207,8 @@ public class MissingPeopleDetailActivity extends AppCompatActivity implements Vi
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (!FirebaseAuth.getInstance().getUid().equals(uid)) {
-            menu.findItem(R.id.menu_maps).setVisible(false);
+        if (!FirebaseAuth.getInstance().getUid().equals(model.getUidReporter())) {
+            menu.findItem(R.id.menu_maps).setVisible(true);
         }
         return super.onPrepareOptionsMenu(menu);
     }

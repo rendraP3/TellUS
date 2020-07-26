@@ -12,7 +12,7 @@ public class People implements Parcelable {
     private String uid;
     private String uidReporter;
     private String name;
-    private String age;
+    private int age;
     private String gender;
     private String phoneNumberReporter;
     private String address;
@@ -36,7 +36,7 @@ public class People implements Parcelable {
         uid = in.readString();
         uidReporter = in.readString();
         name = in.readString();
-        age = in.readString();
+        age = in.readInt();
         gender = in.readString();
         phoneNumberReporter = in.readString();
         address = in.readString();
@@ -58,7 +58,7 @@ public class People implements Parcelable {
         dest.writeString(uid);
         dest.writeString(uidReporter);
         dest.writeString(name);
-        dest.writeString(age);
+        dest.writeInt(age);
         dest.writeString(gender);
         dest.writeString(phoneNumberReporter);
         dest.writeString(address);
@@ -116,11 +116,11 @@ public class People implements Parcelable {
         this.name = name;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -236,7 +236,7 @@ public class People implements Parcelable {
         this.timeStamp = timeStamp;
     }
 
-    public People(String uid, String uidReporter, String name, String age, String gender,
+    public People(String uid, String uidReporter, String name, int age, String gender,
                   String phoneNumberReporter, String address, String lastLocation,
                   String description, List<MissingImage> imagesUrl, String date, boolean isReported,
                   boolean isActive, boolean isFound, boolean isVerify, double latitude,

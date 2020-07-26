@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         setupViewPager();
     }
 
+    // Fungsi untuk inisialiasi view pager pada main Activity
     private void setupViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
@@ -89,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Custom class untuk adaper view pager
     static class ViewPagerAdapter extends FragmentPagerAdapter{
 
         private List<Fragment> fragmentList = new ArrayList<>();

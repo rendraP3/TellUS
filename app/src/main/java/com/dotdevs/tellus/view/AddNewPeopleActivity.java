@@ -106,6 +106,7 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Inisialisasi Mapbox
         Mapbox.getInstance(this, getString(R.string.mapbox_token));
         setContentView(R.layout.activity_add_new_people);
         ButterKnife.bind(this);
@@ -119,6 +120,7 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationOnClickListener(v -> finish());
 
+        // Inisialiasi Firestore, Firebase Auth dan Firebase Storage
         mFirestore = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -142,11 +144,13 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
         });
     }
 
+    // Fungsi untuk mengatur list untuk menambah gambar
     private void setupImageList() {
         rvImage.setLayoutManager(new GridLayoutManager(this, 3, RecyclerView.VERTICAL, false));
         rvImage.setAdapter(adapter);
     }
 
+    // Fungsi untuk mengatur dropdown gender
     private void setupSpinner() {
         List<String> genderList = new ArrayList<>();
         genderList.add("Laki - Laki");
@@ -171,9 +175,10 @@ public class AddNewPeopleActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    // Fungsi untuk menambah data orang hilang
     private void addNewData(){
         String name = txtName.getText().toString();
-        String age = txtAge.getText().toString();
+        int age = Integer.parseInt(txtAge.getText().toString());
         String phoneNumber = txtPhoneNumber.getText().toString();
         String address = txtAddress.getText().toString();
         String lastLocation = txtLastLocation.getText().toString();
