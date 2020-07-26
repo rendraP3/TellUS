@@ -49,6 +49,7 @@ public class WaitingListFragment extends Fragment {
         return view;
     }
 
+    // Mengambil semua laporan yang belum diverifikasi oleh admin
     private void getWaitingList() {
 
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
